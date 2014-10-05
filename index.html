@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
 
-    <title>WakeUpRightNowYouReallyNeedToWakeUpNowItsVeryImportant</title>
+    <title>CatNap</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -34,13 +34,13 @@
         <div class="navbar navbar-inverse navbar-static-top" role="navigation">
           <div class="container">
             <div class="navbar-header">
-              <a class="navbar-brand" href="#">SmartAirBed</a>
+              <a class="navbar-brand" href="index.html">CatNap</a>
             </div>
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#reserve">Reserve</a></li>
+                <li class="active"><a href="index.html">Reserve</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="#"></a></li>
               </ul>
             </div>
           </div>
@@ -61,34 +61,12 @@
 
       <div class="row featurette" style="margin-top:130px">
         <div class="col-md-7">
-          <img class="featurette-image img-responsive" data-src="holder.js/700x700/auto" alt="Generic placeholder image">
+          <img id="backgroundHack" class="featurette-image img-responsive" style="width:600px; height:600px" onmouseover="this.src='sleep.jpg'" onmouseout="this.src='nyanca.gif'" src="nyanca.gif"/>
 
         </div>
         <div class="col-md-5">
-          <h2 class="featurette-heading" style="margin-top: 20px"><span2 style="font-size:200px;">1:42</span2><br /><br /><span class="text-muted">Sleep Scheduler</span></h2>
+          <h2 class="featurette-heading" style="margin-top: 20px"><span2 style="font-size:200px;">0:42</span2><br /><br /><span class="text-muted" style="font-size:50px">Sleep Scheduler</span></h2>
           <br />
-        <!--   <form class="form-horizontal" role="form">
-            <div class="form-group">
-              <label for="inputEmail3" class="col-sm-2 control-label">Bed</label>
-              <div class="col-sm-10">
-                <input type="email" class="form-control" id="inputEmail3" placeholder="Enter #">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="inputPassword3" class="col-sm-2 control-label">Minutes</label>
-              <div class="col-sm-10">
-                <input type="password" class="form-control" id="inputPassword3" placeholder="Enter an integer between 1-60">
-              </div>
-            </div>
-
-
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">Reserve</button>&nbsp;&nbsp;&nbsp;
-                <button type="submit" class="btn btn-default">Force Stop</button>
-              </div>
-            </div>
-          </form> -->
 
           <form>
             <select id="score" class="form-control" onchange="document.location.href = 'index.html?min=' + this.value">
@@ -105,17 +83,50 @@
       </div><br /><hr />
 
        <script>
+        document.getElementById("backgroundHack").style.src = "sleep.jpg";
+
+        var edit_save = document.getElementById("backgroundHack");
+        edit_save.hover = function(){
+       this.src = "sleep.jpg";
+        }
+
         var myFirebaseRef = new Firebase("https://wakeuprightnowyourea.firebaseio.com/");
         var minute = Number(window.location.href.substring(window.location.href.lastIndexOf("min=")+4,window.location.href.length));
         var force = false;
 
+        var d = new Date();
+
+        var time = d.setUTCHours();
+
         if (minute == 0) {
           force = true;
+          var http = new XMLHttpRequest();
+          var url = "https://api.justyo.co/yoall/";
+          var params = "api_token=167e8726e5809368032d1e9c578fc519d48870c7";
+          http.open("POST", url, true);
+
+          //Send the proper header information along with the request
+          http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          http.setRequestHeader("Content-length", params.length);
+          http.setRequestHeader("Connection", "close");
+
+          http.onreadystatechange = function() {//Call a function when the state changes.
+              if(http.readyState == 4 && http.status == 200) {
+                  alert(http.responseText);
+              }
+          }
+          http.send(params);
         }
         y = [{"bed": 1, "minutes": minute, "force": force}];
+
         myFirebaseRef.set(y);
+        
 
       </script>
+
+      <audio loop onloadeddata="var audioPlayer = this; setTimeout(function() { audioPlayer.play(); }, 0)">
+      <source src="catloop.mp3" type="audio/mpeg">
+      </audio>
 
       <!-- FOOTER -->
       <footer>

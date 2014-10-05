@@ -7,13 +7,11 @@ int pos = 0;    // variable to store the servo position
  
 void setup() 
 { 
-  Serial.begin(9600);
   myservo.attach(9);  // pump servo
   myservo2.attach(10); // bleed servo
   
   pinMode(7, INPUT); // pump
   pinMode(8, INPUT); // bleed
-
   /*
   pos = 180;
   myservo.write(pos);
@@ -41,17 +39,6 @@ void deflate() {
  
 void loop() 
 { 
-   
-  int x = 0;
-  int y = 0;
-  
-  x = digitalRead(13);
-  y = digitalRead(12);
-  Serial.print(x);
-  Serial.print("|");
-  Serial.print(y);
-  Serial.print("\n");
-  
   if (digitalRead(7) == LOW && digitalRead(8) == LOW) {
     neutral();
   } else if (digitalRead(7) == HIGH && digitalRead(8) == LOW) {

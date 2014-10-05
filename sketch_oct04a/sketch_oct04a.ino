@@ -26,12 +26,12 @@ void setup()
 
 void neutral() {
   myservo.write(180);
-  myservo2.write(80);
+  myservo2.write(85);
 }
 
 void inflate() {
   myservo.write(80);
-  myservo2.write(80);
+  myservo2.write(85);
 }
 
 void deflate() {
